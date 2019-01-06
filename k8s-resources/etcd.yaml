@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etcd
+  labels:
+    app: etcd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etcd
+  template:
+    metadata:
+      labels:
+        app: etcd
+    spec:
+      containers:
+        - name: etcd
+          image: microbox/etcd
+          imagePullPolicy: IfNotPresent
+          args: ["--name", "etcd"]
+          ports:
+            - containerPort: 4001
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: etcd
+spec:
+  selector:
+    app: etcd
+  ports:
+    - protocol: TCP
+      port: 4001
+      targetPort: 4001

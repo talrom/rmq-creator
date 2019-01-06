@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  rmq-listener
+  labels:
+    app: rmq-listener
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rmq-listener
+  template:
+    metadata:
+      annotations:
+        name: rmq-listener
+      labels:
+        app: rmq-listener
+    spec:
+      containers:
+        - name: rmq-listener
+          image: rmq-listener:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 31874
+          env:
+            - name: "rmq_host"
+              value: "rabbitmq-deployment"
+            - name: "rmq_port"
+              value: "5672"
+            - name: "rmq_user"
+              value: "admin"
+            - name: "rmq_pwd"
+              value: "admin"
+            - name: "q_name"
+              value: "defaultQ"
