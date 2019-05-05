@@ -2,7 +2,7 @@
 
 RMQ1=$(kubectl.exe get pods -n rmq | grep "rabbit" | awk 'NR==1{print $1}')
 
-kubectl.exe exec $RMQ1 -n rmq rabbitmqctl add_user admin admin
+kubectl.exe exec $RMQ1 -n rmq rabbitmqctl add_user <user> <password>
 sleep 5
 
 kubectl.exe exec $RMQ1 -n rmq rabbitmqctl set_user_tags admin administrator
